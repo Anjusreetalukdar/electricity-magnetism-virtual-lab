@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="<?php echo getTempCss('grid.css'); ?>" />
 <link href="<?php echo getTempCss('mainstyle.css'); ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo getTempCss('resp.css'); ?>" rel="stylesheet" type="text/css" />
-<script src="js/jquery-latest.js"></script>
+<script src="../lib/js/jquery-latest.js"></script>
 <!--[if IE]><script src="js/excanvas.js"></script><![endif]-->
 <?php getIncludes(); ?>
 <!--[if gte IE 9]>
@@ -21,7 +21,7 @@
     }
   </style>
 <![endif]-->
-<script src="js/js-webshim/1.9.7/minified/extras/modernizr-custom.js"></script>
+<script src="../lib/js/js-webshim/1.9.7/minified/extras/modernizr-custom.js"></script>
 <script> 
 
 if( !Modernizr.inputtypes.range ){  
