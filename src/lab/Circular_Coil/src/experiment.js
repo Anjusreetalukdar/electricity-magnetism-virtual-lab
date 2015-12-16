@@ -26,7 +26,7 @@ var helpArray = [];
 function directiveFunction() {
 	return {
 		restrict: "A",
-		link: function(scope, element, attrs, dialogs) {
+		link: function(scope, element, attrs) {
 			/** Variable that decides if something should be drawn on mouse move */
 			var experiment = true;
 			if (element[0].width > element[0].height) {
