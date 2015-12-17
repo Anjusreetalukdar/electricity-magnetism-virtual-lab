@@ -22,7 +22,7 @@ var noOfTurnsArray = wires_array = helpArray = [];
 function directiveFunction() {
 	return {
 		restrict: "A",
-		link: function(scope, element, attrs) {
+		link: function(scope, element, attrs, dialogs) {
 			/** Variable that decides if something should be drawn on mouse move */
 			var experiment = true;
 			if (element[0].width > element[0].height) {
@@ -392,7 +392,7 @@ function initialSetup(scope,dialogs) {
 		initial_view_container.alpha = 0;
 		if ( scope.rotate_apparatus_disable == false ) {
 			scope.initial_setup_btn_lbl = _("Zoom Compass"); /** Button value changed as Initial Setup */
-			if(rotate_compass_float>=100){
+			if ( rotate_compass_float >= 100 ) {
 				if ((apparatus_rotatn >= 207 && apparatus_rotatn <= 209) || (apparatus_rotatn >= 389 && apparatus_rotatn <= 391)) {
 			  		/** Check whether the '0' reading of the apparatus coined to the needle, 
 			 		then the circuit is ready for the connection */
@@ -402,7 +402,7 @@ function initialSetup(scope,dialogs) {
 				 	dialogs.error();
 				}
 			} else { /** Second division of the compass reading */
-				if ((apparatus_rotatn >= 28 && apparatus_rotatn <= 31) || (apparatus_rotatn >= 207 && apparatus_rotatn <= 210)) {
+				if ( (apparatus_rotatn >= 28 && apparatus_rotatn <= 31) || (apparatus_rotatn >= 207 && apparatus_rotatn <= 210) ) {
 					/** Check whether the '0' reading of the apparatus coined to the needle, 
 					then the circuit is ready for the connection */
 					scope.rotate_apparatus_disable = true;

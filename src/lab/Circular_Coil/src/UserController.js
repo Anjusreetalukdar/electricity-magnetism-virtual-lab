@@ -1,10 +1,17 @@
 (function(){
-    angular.module('users',['FBAngular'])
-        .controller('UserController', [
-        '$mdSidenav', '$mdBottomSheet', '$log', '$q','$scope','$element','Fullscreen','$mdToast','$animate',
+    angular
+    .module('users',['FBAngular','ui.bootstrap','dialogs.main','pascalprecht.translate'])
+    .controller('UserController', [
+        '$mdSidenav', '$mdBottomSheet', '$log', '$q','$scope','$element','Fullscreen','$mdToast','$animate','$translate','dialogs',
         UserController
-    ]);	
-
+    ])
+    .config(['dialogsProvider','$translateProvider',function(dialogsProvider,$translateProvider){
+        dialogsProvider.useBackdrop('static');
+        dialogsProvider.useEscClose(false);
+        dialogsProvider.useCopy(false);
+        dialogsProvider.setSize('sm');
+        $translateProvider.translations(language,{DIALOGS_ERROR:(_("Error")),DIALOGS_ERROR_MSG:(_("Error in initial Adjustment of the apparatus.")),DIALOGS_CLOSE:(_("Okay"))}),$translateProvider.preferredLanguage(language);
+    }]);
 	/**
 	 * Main Controller for the Angular Material Starter App
 	 * @param $scope
@@ -12,7 +19,7 @@
 	 * @param avatarsService
 	 * @constructor
 	 */
-	function UserController($mdSidenav, $mdBottomSheet, $log, $q, $scope, $element, Fullscreen, $mdToast, $animate) {
+	function UserController($mdSidenav, $mdBottomSheet, $log, $q, $scope, $element, Fullscreen, $mdToast, $animate, $translate, dialogs) {
 		$scope.toastPosition = {
 			bottom: true,
 			top: false,
