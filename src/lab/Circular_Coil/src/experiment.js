@@ -3,25 +3,19 @@
 		.directive("experiment", directiveFunction)
 })();
 
-var circular_coil_stage, exp_canvas, line_flag, line, wire_numbers, insert_key_flag, reverse_key_flag, initial_adj_flag;
+var circular_coil_stage,exp_canvas,line_flag,line,wire_numbers,insert_key_flag,reverse_key_flag,initial_adj_flag;
 
-var current_needle_rotation, current_measure_rotation, current_base_rotation, rotate_compass_float;
+var current_needle_rotation,current_measure_rotation,current_base_rotation,rotate_compass_float,degree_of_deflection;
 
-var degree_of_deflection, rotate_apparatus_float, indexVal;
+var rotate_apparatus_float,index_val,number_of_turns,radius_in_mtr,current_int,apparatus_rotatn,magnetic_field,rhvalue_int;
 
-var wires_array = []; /** Connecting wire image id's in this array */
-
-var number_of_turns, radius_in_mtr, current_int, apparatus_rotatn, magnetic_field;
-
-var rhvalue_int, voltage_int, permeability, permeability_const;
+var voltage_int,permeability,permeability_const,distance_compass,measure_rotate,initial_measure_rotation;
 
 var tick; /** Tick timer for stage updation */
 
-var circular_coil_container, initial_view_container, compassbox_move_container, distance_compass;
+var circular_coil_container,initial_view_container,compassbox_move_container;
 
-var noOfTurnsArray = [];
-
-var helpArray = [];
+var wires_array = no_of_turns_array = help_array = []; /** Connecting wire image id's array, number of turns array and help array */
 
 function directiveFunction() {
 	return {
@@ -254,7 +248,7 @@ function directiveFunction() {
 			/** Add all the strings used for the language translation here. '_' is the short cut for calling the gettext function defined in the gettext-definition.js */
 			function translationLabels() {
 				/** This help array shows the hints for this experiment */
-				helpArray = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("help6"), _("help7"), _("Next"), _("Close")];
+				help_array = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("help6"), _("help7"), _("Next"), _("Close")];
 				scope.heading = _("Magnetic Field Along The Axis of A Circular Coil Carrying Current");
 				scope.variables = _("Variables");//+" x 10";
 				scope.no_of_turns = _("Number of turns of the coil");
@@ -273,25 +267,25 @@ function directiveFunction() {
 				scope.magnetic_field = _("Magnetic field at");
 				scope.show_normal = _("Show Normal");
 				scope.copyright = _("copyright");
-				/** The noOfTurnsArray contains the values and indexes of the dropdown */
-				scope.noOfTurnsArray = [{
+				/** The no_of_turns_array contains the values and indexes of the first slider */
+				scope.no_of_turns_array = [{
 					turns: 10,
-					indexVal: 0
+					index_val: 0
 				}, {
 					turns: 15,
-					indexVal: 1
+					index_val: 1
 				}, {
 					turns: 20,
-					indexVal: 2
+					index_val: 2
 				}, {
 					turns: 25,
-					indexVal: 3
+					index_val: 3
 				}, {
 					turns: 35,
-					indexVal: 4
+					index_val: 4
 				}, {
 					turns: 45,
-					indexVal: 5
+					index_val: 5
 				}];				
 				scope.$apply();
 			}
@@ -306,14 +300,14 @@ function updateTimer() {
 
 /** All the texts loading and added to the stage */
 function setText(name, textX, textY, value, color, fontSize, container) {
-	var text = new createjs.Text(value, "bold " + fontSize + "em Tahoma, Geneva, sans-serif", color);
-	text.x = textX;
-	text.y = textY;
-	text.textBaseline = "alphabetic";
-	text.name = name;
-	text.text = value;
-	text.color = color;
-	container.addChild(text); /** Adding text to the container */
+	var _text = new createjs.Text(value, "bold " + fontSize + "em Tahoma, Geneva, sans-serif", color);
+	_text.x = textX;
+	_text.y = textY;
+	_text.textBaseline = "alphabetic";
+	_text.name = name;
+	_text.text = value;
+	_text.color = color;
+	container.addChild(_text); /** Adding text to the container */
 }
 
 /** All the images loading and added to the stage */
@@ -367,15 +361,15 @@ function initialisationOfVariables() {
 	voltage_int = 5;
 	permeability = 0;
 	apparatus_rotatn = 0;
-	indexVal = 0;
+	index_val = 0;
 	current_needle_rotation = 0;
 	current_measure_rotation = 0;
 	current_base_rotation = 0;
 	/** Initially displayed the circular coil container and compass box move container */
 	circular_coil_container.alpha = 1; 
-	initial_measure_rotation = 50;
 	compassbox_move_container.alpha = 1;
 	initial_view_container.alpha = 0; /** Initial view container is not displayed initially */
+	initial_measure_rotation = 50;
 	line_flag = false; /** Draw line flag for connect wires */
 	insert_key_flag = false; /** Insert key and reverse key flag */
 	reverse_key_flag = false;
@@ -384,7 +378,6 @@ function initialisationOfVariables() {
 	/** Following buttons and sliders are disabled first except initial adjustment button */
 	hide_show_sliders = false; /** It hides the sliders rotate compass box and rotate apparatus */
 	control_disable = true; /** It disables the controls drop down box, reverse current, radius of coil, adjust rheostat, check box, reset */
-	initial_adj_disable = false; /** It enables the Initial adjustment button */
 	insert_key_disable = true; /** It disables the insert key button */
 }
 
@@ -405,12 +398,11 @@ function initialisationOfImages() {
 	circular_coil_container.getChildByName("black_keybox_to_key4").visible = false;
 	circular_coil_container.getChildByName("round_key2").visible = false;
 	circular_coil_container.getChildByName("round_key4").visible = false;
-	circular_coil_container.getChildByName("main_key").visible = false;
-	
+	circular_coil_container.getChildByName("main_key").visible = false;	
 }
 
 /** Button event for showing the normal view */
-function initialAdjustmentfn(scope, dialogs) {
+function initialAdjustmentFn(scope, dialogs) {
 	if ( !initial_adj_flag ) { /** If the initial view is displayed */
 		scope.hide_show_sliders = true; /** It shows the sliders rotate compass box and rotate apparatus */
 		initial_adj_flag = true;
@@ -434,7 +426,7 @@ function initialAdjustmentfn(scope, dialogs) {
 				scope.rotate_apparatus_disable = true;
 				createCircleForConnection(scope); /** Ready for wire connection */
 			}
-			else{ /** if initial adjustment fails */
+			else{ /** If initial adjustment fails */
 				dialogs.error();
 			}
 		} else { /** Second division of the compass reading */
@@ -451,14 +443,14 @@ function initialAdjustmentfn(scope, dialogs) {
 }
 
 /** Radius of the coil slider function */
-function radiusSliderFN(scope) {
+function radiusSliderFn(scope) {
 	radius_in_mtr = scope.Radius / 100;
 	scope.radius = scope.Radius;
 	magneticFieldCalculation(scope); /** Finding the magnetic field in this function */
 }
 
 /** Compass box move slider */
-function compassBoxSliderFN(scope) {
+function compassBoxSliderFn(scope) {
 	distance_compass = scope.compassPosition / 100;
 	scope.compass_position = scope.compassPosition;
 	var _scalex = 0.995 - (scope.compassPosition / 650);
@@ -469,7 +461,7 @@ function compassBoxSliderFN(scope) {
 }
 
 /** Adjust rheostat slider function */
-function adjRheostatSliderFN(scope) {
+function adjRheostatSliderFn(scope) {
 	rhvalue_int = scope.adjustRheostat;
 	/** Rheostat key position changes according to the slider value */
 	var _x_move = 215 + (rhvalue_int * 2); /** Adjusting the x value of rheostat */
@@ -484,9 +476,8 @@ function currentRotation(scope) {
 	current_base_rotation = initial_view_container.getChildByName("zoomed_black_needle_base").rotation;
 }
 
-var measure_rotate, initial_measure_rotation;
 /** Rotate compass slider changing function */
-function rotateCompassSliderFN(scope) {
+function rotateCompassSliderFn(scope) {
 	rotate_compass_float = scope.rotateCompass;
 	if ( (rotate_compass_float >= 48 && rotate_compass_float <= 56) || (rotate_compass_float >= 224 && rotate_compass_float <= 232) ) {
 		/** Rotate the compass in such a way that the 90 reading in the compass come horizontal to the apparatus */
@@ -501,7 +492,7 @@ function rotateCompassSliderFN(scope) {
 }
 
 /** Rotate apparatus slider changing function */
-function rotateApparatusSliderFN(scope) {
+function rotateApparatusSliderFn(scope) {
 	scope.rotate_compass_disable = true; /** It disables the rotate compass slider */
 	rotate_apparatus_float = scope.rotateApparatus;
 	apparatus_rotatn = Math.round(rotate_apparatus_float + measure_rotate);
@@ -650,16 +641,15 @@ function checkHitLead(name,xPos, yPos) {
 			break;
 		case "compassbox_circle1":
 			checkHit(circular_coil_container.getChildByName("keybox_circle3"), "black_keybox_to_key1", name,xPos, yPos);
-			break;
-			
+			break;			
 	}
 }
 
 /** Hit check function */
 function checkHit(spot, wire, name,xPos, yPos) {
 	spot.alpha = 0.8; /** Shows the destination point */
-	var ptL = spot.globalToLocal(xPos, yPos);	
-	if ( spot.hitTest(ptL.x, ptL.y) ) {
+	var _ptL = spot.globalToLocal(xPos, yPos);	
+	if ( spot.hitTest(_ptL.x, _ptL.y) ) {
 		line_flag = true;
 		line.graphics.clear();
 		circular_coil_container.removeChild(line);
@@ -690,13 +680,13 @@ function checkConnectionComplete(scope) {
 /** Drop down list change function */
 function noOfTurnsSelection(scope) {
 	getWiresName();
-	var turns_count = (scope.Turns-10)/5;
-	for ( i = 0; i < wires_array.length; i++ ) { /** Wires for invisible */
+	var _turns_count = (scope.Turns-10)/5;
+	for (var i = 0; i < wires_array.length; i++ ) { /** Wires for invisible */
 		wires_array[i][0].visible = false;
 		wires_array[i][1].visible = false;
 	}
-	wires_array[turns_count][0].visible = true;
-	wires_array[turns_count][1].visible = true;
+	wires_array[_turns_count][0].visible = true;
+	wires_array[_turns_count][1].visible = true;
 	number_of_turns = scope.Turns;
 	magneticFieldCalculation(scope);
 }
@@ -730,16 +720,16 @@ function insertKeyFunction(scope) {
 
 /** Reverse current button function */
 function reverseCurrentFunction(scope) {
-	var rev_rotation;
+	var _rev_rotation;
 	if ( !reverse_key_flag ) {
 		circular_coil_container.getChildByName("round_key1").visible = false;
 		circular_coil_container.getChildByName("round_key3").visible = false;
 		circular_coil_container.getChildByName("round_key2").visible = true;
 		circular_coil_container.getChildByName("round_key4").visible = true;
-		rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation - (degree_of_deflection * 2));
+		_rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation - (degree_of_deflection * 2));
 		reverse_key_flag = true; /** Set reverse key flag as true */
 	} else {
-		rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation + (degree_of_deflection * 2));
+		_rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation + (degree_of_deflection * 2));
 		circular_coil_container.getChildByName("round_key1").visible = true;
 		circular_coil_container.getChildByName("round_key3").visible = true;
 		circular_coil_container.getChildByName("round_key2").visible = false;
@@ -748,17 +738,17 @@ function reverseCurrentFunction(scope) {
 	}
 	/** Rotate the needle of the compass based on the reverse current calculation */
 	var zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
-		rotation: (rev_rotation)
+		rotation: (_rev_rotation)
 	}, 500);
 	var zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
-		rotation: (rev_rotation)
+		rotation: (_rev_rotation)
 	}, 500);
-	compassbox_move_container.getChildByName("black_needle_knob").rotation = rev_rotation;
-	compassbox_move_container.getChildByName("needle").rotation = rev_rotation;
+	compassbox_move_container.getChildByName("black_needle_knob").rotation = _rev_rotation;
+	compassbox_move_container.getChildByName("needle").rotation = _rev_rotation;
 }
 
 /** Show result check box function */
-function showresultFN(scope) {
+function showResultFn(scope) {
 	if ( scope.resultValue == true ) {
         if ( insert_key_flag == true ) {     
             scope.hide_show_result=true;
@@ -780,49 +770,41 @@ function reset(scope) {
 /** Finding the magnetic field in this function */
 function magneticFieldCalculation(scope) {
 	/** Mainly using these formulas B=µ0 r²n*i/(2*(r²+x²)3/2), B=B0 tanθ*/
-	var tan_theta;
-	var erth_centr_magfield;
-	var erth_magfield = 0.000035; /** earth magnetic field, which is a constant 3.5* 10^-5 */
-
-	var deflection_radian; /** Deflection angle in radians*/
+	var _tan_theta;
+	var _erth_magfield = 0.000035; /** earth magnetic field, which is a constant 3.5* 10^-5 */
+	var _deflection_radian; /** Deflection angle in radians*/
 	/** current I= V/R , where V is the volateg and  R is the resistance */
 	current_int = voltage_int / rhvalue_int;
-
 	/** Voltmeter text display */
 	circular_coil_container.getChildByName("voltmeterTxt").text = current_int.toFixed(3); /** Voltmeter reading */
-
 	/** Permeability calculation µ0 r²n*i */
 	permeability = permeability_const * Math.pow(radius_in_mtr, 2) * number_of_turns * current_int;
-	var distance_radius_sqr = Math.pow(radius_in_mtr, 2) + Math.pow(distance_compass, 2);
-
+	var _distance_radius_sqr = Math.pow(radius_in_mtr, 2) + Math.pow(distance_compass, 2);
 	/** (r²+x²)3/2 */
-	var distance_radius_threebyTwo = Math.pow(distance_radius_sqr, (3 / 2));
-
+	var _distance_radius_threebyTwo = Math.pow(_distance_radius_sqr, (3 / 2));
 	/** B= BH tanθ; where B=µ0 r²n*i/(2*(r²+x²)3/2) */
-	tan_theta = permeability / (2 * erth_magfield * distance_radius_threebyTwo);
-
+	_tan_theta = permeability / (2 * _erth_magfield * _distance_radius_threebyTwo);
 	/** deflection (radian)=Math.atan(θ) */
-	deflection_radian = Math.atan(tan_theta);
-
+	_deflection_radian = Math.atan(_tan_theta);
 	/** 1 degree=1 radian* 180/Math.PI */
-	degree_of_deflection = deflection_radian * (180 / Math.PI);	
-	magnetic_field = erth_magfield * tan_theta;
-	var rot;
+	degree_of_deflection = _deflection_radian * (180 / Math.PI);	
+	magnetic_field = _erth_magfield * _tan_theta;
+	var _rot;
 	if ( !reverse_key_flag ) {
-		rot=30 +degree_of_deflection;
+		_rot=30 +degree_of_deflection;
 	} else { /** For reverse current rotation */
-		rot=-(degree_of_deflection)+30;
+		_rot=-(degree_of_deflection)+30;
 	}
 	/** Rotating, compass needle and compass base depend upon the magnetic field and deflection */
 	var zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
-		rotation: (rot)
+		rotation: (_rot)
 	}, 500);
 	var zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
-		rotation: (rot)
+		rotation: (_rot)
 	}, 500);
-	compassbox_move_container.getChildByName("black_needle_knob").rotation = rot;
-	compassbox_move_container.getChildByName("needle").rotation = rot;	
-	showresultFN(scope); /** Display results in the result tab */
+	compassbox_move_container.getChildByName("black_needle_knob").rotation = _rot;
+	compassbox_move_container.getChildByName("needle").rotation = _rot;	
+	showResultFn(scope); /** Display results in the result tab */
 }
 
 /** Calculation ends here */

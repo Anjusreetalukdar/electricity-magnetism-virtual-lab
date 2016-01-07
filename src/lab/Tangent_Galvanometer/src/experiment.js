@@ -3,21 +3,17 @@
 		.directive("experiment", directiveFunction)
 })();
 
-var galvanometer_stage, exp_canvas;
+var galvanometer_stage,exp_canvas,line_flag,line,wire_numbers,insert_key_flag,reverse_key_flag,initial_setup_flag;
 
-var line_flag, line, wire_numbers, insert_key_flag, reverse_key_flag, initial_setup_flag;
+var current_measure_rotation,rotate_compass_float,rotate_apparatus_float,index_val;
 
-var current_measure_rotation, rotate_compass_float, rotate_apparatus_float, indexVal;
-
-var number_of_turns, radius_in_mtr, current_int;
-
-var rhvalue_int, voltage;
+var number_of_turns,radius_in_mtr,current_int,rhvalue_int,voltage,measure_rotate,apparatus_rotatn;
 
 var tick; /** Tick timer for stage updation */
 
-var galvanometer_container, initial_view_container, reduction_factor, initial_measure_rotation, degree_of_deflection;
+var galvanometer_container,initial_view_container,reduction_factor,initial_measure_rotation,degree_of_deflection;
 
-var noOfTurnsArray = wires_array = helpArray = [];
+var no_of_turns_array = wires_array = help_array = [];
 
 function directiveFunction() {
 	return {
@@ -231,7 +227,7 @@ function directiveFunction() {
 			/** Add all the strings used for the language translation here. '_' is the short cut for calling the gettext function defined in the gettext-definition.js */
 			function translationLabels() {
 				/** This help array shows the hints for this experiment */
-				helpArray = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("help6"), _("help7"), _("Next"), _("Close")];
+				help_array = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("help6"), _("help7"), _("Next"), _("Close")];
 				scope.heading = _("Tangent Galvanometer");
 				scope.variables = _("Variables");
 				scope.no_of_turns = _("Number of turns of the coil");
@@ -249,25 +245,25 @@ function directiveFunction() {
 				scope.red_factor = _("Reduction Factor");
 				scope.show_normal = _("Show Normal");
 				scope.copyright = _("copyright");
-				/** The noOfTurnsArray contains the values and indexes of the dropdown */
-				scope.noOfTurnsArray = [{
+				/** The no_of_turns_array contains the values and indexes of the first slider */
+				scope.no_of_turns_array = [{
 					turns: 10,
-					indexVal: 0
+					index_val: 0
 				}, {
 					turns: 15,
-					indexVal: 1
+					index_val: 1
 				}, {
 					turns: 20,
-					indexVal: 2
+					index_val: 2
 				}, {
 					turns: 25,
-					indexVal: 3
+					index_val: 3
 				}, {
 					turns: 35,
-					indexVal: 4
+					index_val: 4
 				}, {
 					turns: 45,
-					indexVal: 5
+					index_val: 5
 				}];
 				scope.$apply();
 			}
@@ -282,14 +278,14 @@ function updateTimer() {
 
 /** All the texts loading and added to the stage */
 function setText(name, textX, textY, value, color, fontSize, container) {
-	var text = new createjs.Text(value, "bold " + fontSize + "em Tahoma, Geneva, sans-serif", color);
-	text.x = textX;
-	text.y = textY;
-	text.textBaseline = "alphabetic";
-	text.name = name;
-	text.text = value;
-	text.color = color;
-	container.addChild(text); /** Adding text to the container */
+	var _text = new createjs.Text(value, "bold " + fontSize + "em Tahoma, Geneva, sans-serif", color);
+	_text.x = textX;
+	_text.y = textY;
+	_text.textBaseline = "alphabetic";
+	_text.name = name;
+	_text.text = value;
+	_text.color = color;
+	container.addChild(_text); /** Adding text to the container */
 }
 
 /** All the images loading and added to the stage */
@@ -339,8 +335,10 @@ function initialisationOfVariables() {
 	current_int = 1;
 	rhvalue_int = 5;
 	voltage = 5;
-	indexVal = 0;
+	index_val = 0;
 	reduction_factor = 0;
+	measure_rotate = 0;
+	apparatus_rotatn = 0;
 	current_measure_rotation = 0;
 	initial_measure_rotation = 50;
 	galvanometer_container.alpha = 1; /** Initially displayed the galvanometer container */
@@ -437,7 +435,7 @@ function adjRheostatSliderFN(scope) {
 function currentRotation(scope) {
 	current_measure_rotation = initial_view_container.getChildByName("zoomed_measures").rotation;
 }
-var measure_rotate;
+
 /** Rotate compass slider changing function */
 function rotateCompassSliderFN(scope) {
 	rotate_compass_float = scope.rotateCompass;
@@ -448,24 +446,24 @@ function rotateCompassSliderFN(scope) {
 		scope.rotate_apparatus_disable = true;
 	}
 	measure_rotate = rotate_compass_float - initial_measure_rotation;
-	var zoomed_measure_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_measures")).to({
+	var _zoomed_measure_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_measures")).to({
 		rotation: (measure_rotate)
 	}, 100); /** Rotate the measures in the zoomed view */
 }
-var apparatus_rotatn=0;
+
 /** Rotate apparatus slider changing function */
 function rotateApparatusSliderFN(scope) {
 	scope.rotate_compass_disable = true; /** It disables the rotate compass slider */
 	rotate_apparatus_float = scope.rotateApparatus;
 	apparatus_rotatn=Math.round(rotate_apparatus_float+measure_rotate);
 	/** Rotate full apparatus including background except needle rotation using tween */
-	var zoomed_background_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_background")).to({
+	var _zoomed_background_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_background")).to({
 		rotation: (rotate_apparatus_float)
 	}, 500);
-	var zoomed_black_round_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_round")).to({
+	var _zoomed_black_round_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_round")).to({
 		rotation: (rotate_apparatus_float)
 	}, 500);
-	var zoomed_measures_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_measures")).to({
+	var _zoomed_measures_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_measures")).to({
 		rotation: (apparatus_rotatn)
 	}, 500);
 }
@@ -610,8 +608,8 @@ function checkHitLead(name,xPos, yPos) {
 /** Hit check function */
 function checkHit(spot, wire, name,xPos, yPos) {
 	spot.alpha = 0.8; /** Shows the destination point */
-	var ptL = spot.globalToLocal(xPos, yPos);
-	if ( spot.hitTest(ptL.x, ptL.y) ) { /** If hit occured or sucessful connection */     
+	var _ptl = spot.globalToLocal(xPos, yPos);
+	if ( spot.hitTest(_ptl.x, _ptl.y) ) { /** If hit occured or sucessful connection */     
 		line_flag = true;
 		line.graphics.clear();
 		galvanometer_container.removeChild(line);
@@ -640,13 +638,13 @@ function checkConnectionComplete(scope) {
 /** Drop down list change function */
 function noOfTurnsSelection(scope) {
 	getWiresName();
-	var turns_count = (scope.Turns-10)/5;
-	for ( i = 0; i < wires_array.length; i++ ) { /** Wires for invisible */
+	var _turns_count = (scope.Turns-10)/5;
+	for ( var i = 0; i < wires_array.length; i++ ) { /** Wires for invisible */
 		wires_array[i][0].visible = false;
 		wires_array[i][1].visible = false;
 	}
-	wires_array[turns_count][0].visible = true;
-	wires_array[turns_count][1].visible = true;
+	wires_array[_turns_count][0].visible = true;
+	wires_array[_turns_count][1].visible = true;
 	number_of_turns = scope.Turns;
 	intensityAndRedFactorCalc(scope); /** Calculation */
 }
@@ -665,7 +663,7 @@ function insertKeyFunction(scope) {
 		scope.insert_key_btn_lbl = _("Insert Key");
 		scope.control_disable = true;
 		insert_key_flag = false;
-		var zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
+		var _zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
 		rotation: (30)
 	}, 500); /** Needle coined 0-0 line when key is removed */
 		var zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
@@ -680,16 +678,16 @@ function insertKeyFunction(scope) {
 function reverseCurrentFunction(scope) {
 	/** On reverse current button, the compass will deflect to the reverse position 
 	marked by an anticlockwise direction, and vise versa */
-	var rev_rotation;
+	var _rev_rotation;
 	if ( !reverse_key_flag ) {
 		galvanometer_container.getChildByName("round_key1").visible = false;
 		galvanometer_container.getChildByName("round_key3").visible = false;
 		galvanometer_container.getChildByName("round_key2").visible = true;
 		galvanometer_container.getChildByName("round_key4").visible = true;
 		reverse_key_flag = true; /** Set reverse key flag as true */
-		rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation - (degree_of_deflection * 2));
+		_rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation - (degree_of_deflection * 2));
 	} else {
-		rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation + (degree_of_deflection * 2));
+		_rev_rotation = (initial_view_container.getChildByName("zoomed_needle").rotation + (degree_of_deflection * 2));
 		galvanometer_container.getChildByName("round_key1").visible = true;
 		galvanometer_container.getChildByName("round_key3").visible = true;
 		galvanometer_container.getChildByName("round_key2").visible = false;
@@ -697,21 +695,20 @@ function reverseCurrentFunction(scope) {
 		reverse_key_flag = false; /** Set reverse key flag as false */
 	}
 	/** Rotate the needle of the compass based on the reverse current calculation */
-	var zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
-		rotation: (rev_rotation)
+	var _zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
+		rotation: (_rev_rotation)
 	}, 500);
-	var zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
-		rotation: (rev_rotation)
+	var _zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
+		rotation: (_rev_rotation)
 	}, 500);
-	galvanometer_container.getChildByName("black_needle_knob").rotation = rev_rotation;
-	galvanometer_container.getChildByName("needle").rotation = rev_rotation;
+	galvanometer_container.getChildByName("black_needle_knob").rotation = _rev_rotation;
+	galvanometer_container.getChildByName("needle").rotation = _rev_rotation;
 
 }
 
 /** Show result check box function */
-function showresultFN(scope) {
-	/** Display the reduction factor in this function */
-	if ( scope.resultValue == true ) {
+function showresultFN(scope) {	
+	if ( scope.resultValue == true ) { /** Display the reduction factor in this function */
 		if ( insert_key_flag == true ) {
 			scope.hide_show_result = true;
 			scope.red_factor_value = reduction_factor.toFixed(2); /** Display the reduction factor result */
@@ -730,15 +727,16 @@ function reset(scope) {
 /** Finding the horizontal intensity and reduction factor in this function */
 function intensityAndRedFactorCalc(scope) {
 	
-	/** tan_theta -->quotient of magnetic field at the earth center to magnetic field BH(T)
-	erth_centr_magfield --> is the magnetic field ath the centre of the earth, can be calculated by
+	/** _tan_theta -->quotient of magnetic field at the earth center to magnetic field BH(T)
+	_erth_centr_magfield --> is the magnetic field ath the centre of the earth, can be calculated by
 	( µ0*n* I)/2 *r , where I= current, n= number of turns of a circular coil, 
 	r is the radius of the coil and µ0 =4π*10^7 */
 
-	var tan_theta;
-	var erth_centr_magfield;
-	var erth_magfield = 0.000035; /** Earth magnetic field, which is a constant 3.5* 10^-5 */
-	var deflection_radian; /** Deflection angle in radians */
+	var _tan_theta;
+	var _erth_centr_magfield;
+	var _erth_magfield = 0.000035; /** Earth magnetic field, which is a constant 3.5* 10^-5 */
+	var _deflection_radian; /** Deflection angle in radians */
+	var _rotation;
 
 	/** current I= V/R , where V is the volateg and  R is the resistance */
 	current_int = voltage / rhvalue_int;
@@ -746,32 +744,31 @@ function intensityAndRedFactorCalc(scope) {
 	/** Voltmeter text display */
 	galvanometer_container.getChildByName("voltmeterTxt").text = current_int.toFixed(3);
 
-	erth_centr_magfield = (4 * Math.PI * Math.pow(10, -7) * number_of_turns * current_int) / (2 * radius_in_mtr);
+	_erth_centr_magfield = (4 * Math.PI * Math.pow(10, -7) * number_of_turns * current_int) / (2 * radius_in_mtr);
 	/** B= BH tanθ */
-	tan_theta = erth_centr_magfield / erth_magfield;
+	_tan_theta = _erth_centr_magfield / _erth_magfield;
 	/** deflection (radian)=Math.atan(θ) */
-	deflection_radian = Math.atan(tan_theta);
+	_deflection_radian = Math.atan(_tan_theta);
 	/** 1 degree=1 radian* 180/Math.PI */
-	degree_of_deflection = deflection_radian * (180 / Math.PI);
-
-	var rot;
+	degree_of_deflection = _deflection_radian * (180 / Math.PI);
+	
 	if ( !reverse_key_flag ) {
-		rot=30 +degree_of_deflection;
+		_rotation=30 +degree_of_deflection;
 	} else { // For reverse current rotation */
-		rot=-(degree_of_deflection)+30;
+		_rotation=-(degree_of_deflection)+30;
 	}
 		
 	/** Rotating, compass needle and compass base depend upon the magnetic field and deflection */
 	var zoomed_needle_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_needle")).to({
-		rotation: (rot)
+		rotation: (_rotation)
 	}, 500);
 	var zoomed_needlebase_tween = createjs.Tween.get(initial_view_container.getChildByName("zoomed_black_needle_base")).to({
-		rotation: (rot)
+		rotation: (_rotation)
 	}, 500);
-	galvanometer_container.getChildByName("black_needle_knob").rotation = rot;
-	galvanometer_container.getChildByName("needle").rotation = rot;
+	galvanometer_container.getChildByName("black_needle_knob").rotation = _rotation;
+	galvanometer_container.getChildByName("needle").rotation = _rotation;
 	/** Reduction factor K (A)=current/tanθ */
-	reduction_factor = current_int / tan_theta;
+	reduction_factor = current_int / _tan_theta;
 	/** Display results in the result tab */
 	showresultFN(scope);
 }

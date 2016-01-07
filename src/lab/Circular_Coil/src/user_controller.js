@@ -149,19 +149,19 @@
 		}
 		/** The click event function of Initial adjustment button */
 		$scope.initialAdjustment = function() {
-			initialAdjustmentfn($scope, dialogs); /** Function defined in experiment.js file */
+			initialAdjustmentFn($scope, dialogs); /** Function defined in experiment.js file */
 		}
 		/** Change event function of Radius slider */
 		$scope.radiusSlider = function() {
-			radiusSliderFN($scope); /** Function defined in experiment.js file */
+			radiusSliderFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Change event function of Compass box position slider */
 		$scope.compassboxPositionSlider = function() {
-			compassBoxSliderFN($scope); /** Function defined in experiment.js file */
+			compassBoxSliderFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Change event function of Adjust rheostat slider */
 		$scope.adjustRheostatSlider = function() {
-			adjRheostatSliderFN($scope); /** Function defined in experiment.js file */
+			adjRheostatSliderFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Focus event function of sliders Compass box position, Adjust rheostat, Rotate compass and Rotate apparatus */
 		$scope.slideDown = function() {
@@ -169,11 +169,11 @@
 		}
 		/** Change event function of Rotate compass box slider */
 		$scope.rotateCompassSlider = function() {
-			rotateCompassSliderFN($scope); /** Function defined in experiment.js file */
+			rotateCompassSliderFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Change event function of Rotate apparatus slider */
 		$scope.rotateApparatusSlider = function() {
-			rotateApparatusSliderFN($scope); /** Function defined in experiment.js file */
+			rotateApparatusSliderFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Click event function of Insert key button */
 		$scope.insertKeyBtn = function() {
@@ -185,7 +185,7 @@
 		}
 		/** Change event function of the check box Show result */
 		$scope.showResult = function() {
-			showresultFN($scope); /** Function defined in experiment.js file */
+			showResultFn($scope); /** Function defined in experiment.js file */
 		}
 		/** Click event function of the Reset button */
 		$scope.resetBtn = function() {

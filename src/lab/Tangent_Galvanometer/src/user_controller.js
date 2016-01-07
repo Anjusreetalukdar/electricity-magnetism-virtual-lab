@@ -12,7 +12,7 @@
         dialogsProvider.setSize('sm');
         $translateProvider.translations(language,{DIALOGS_ERROR:(_("Error")),DIALOGS_ERROR_MSG:(_("Error in initial Adjustment of the apparatus.")),DIALOGS_CLOSE:(_("Okay"))}),$translateProvider.preferredLanguage(language);
     }]);
-       
+	   
     /**
     * Main Controller for the Angular Material Starter App
     * @param $scope
@@ -21,13 +21,13 @@
     * @constructor
     */
     function UserController( $mdSidenav, $mdBottomSheet, $log, $q,$scope,$element,Fullscreen,$mdToast, $animate, $translate, dialogs) {
-        $scope.toastPosition = {
+	    $scope.toastPosition = {
             bottom: true,
             top: false,
             left: true,
             right: false
         };
-        $scope.toggleSidenav = function(ev) {
+		$scope.toggleSidenav = function(ev) {
             $mdSidenav('right').toggle();
         };
         $scope.getToastPosition = function() {
@@ -49,7 +49,7 @@
             .hideDelay(15000)
             .highlightAction(false)
             .position($scope.getToastPosition());
-          
+		  
             var toast2 = $mdToast.simple()
             .content(helpArray[2])
             .action(helpArray[7])
@@ -94,11 +94,11 @@
                                     $mdToast.show(toast6).then(function() {
                                     });
                                 });
-                            });
-                        });
-                    });
-                });
-            });     
+			 				});
+			  			});
+			  		});
+			  	});
+            });		
         };
   
         var self = this;
@@ -121,7 +121,7 @@
         $scope.compass_position=0; /** Initial compass box position slider value */
         $scope.red_factor_value=0; /** Initial magnetic field result value */
         $scope.compassPosition=0; /** Put the compass box position slider value as 0 */        
-        
+		
         $scope.goFullscreen = function () {
             /** Full screen */
             if (Fullscreen.isEnabled())
@@ -136,7 +136,7 @@
             $scope.showValue=!$scope.showValue;
             $scope.isActive = !$scope.isActive;
         };
-    
+	
         $scope.toggle1 = function () {
             $scope.showVariables=!$scope.showVariables;
             $scope.isActive1 = !$scope.isActive1;
