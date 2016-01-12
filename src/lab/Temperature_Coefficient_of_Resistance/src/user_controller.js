@@ -142,42 +142,38 @@
                 .highlightAction(false)
                 .position($scope.getToastPosition());
    
-            $mdToast.show(_toast1).then(function() { /** Instruction 1 */
-                $mdToast.show(_toast2).then(function() { /** Instruction 2 */
-                    $mdToast.show(_toast3).then(function() { /** Instruction 3 */
-                        $mdToast.show(_toast4).then(function() { /** Instruction 4 */
-                            $mdToast.show(_toast5).then(function() { /** Instruction 5 */
-                                $mdToast.show(_toast6).then(function() { /** Instruction 6 */
-                                    $mdToast.show(_toast7).then(function() { /** Instruction 7 */
-                                        $mdToast.show(_toast8).then(function() { /** Instruction 8 */
-                                            $mdToast.show(_toast9).then(function() { /** Instruction 9 */
-                                                $mdToast.show(_toast10).then(function() { /** Instruction 10 */
-                                                    $mdToast.show(_toast11).then(function() { /** Instruction 11 */
-                                                        $mdToast.show(_toast12).then(function() { /** Instruction 12 */
-                                                            $mdToast.show(_toast13).then(function() { /** Instruction 13 */
-                                                                $mdToast.show(_toast14).then(function() { /** Instruction 14*/
-                                                                    $mdToast.show(_toast15).then(function() { /** Instruction 15 */
-                                                                        $mdToast.show(_toast16).then(function() { /** Instruction 16 */
-                                                                    
-                                                                        });
-                                                                    });
-
-                                                                });
-                                                            });
-                                                        });
-                                                    });    
-                                                });
-
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                         });
-                    });
+	$mdToast.show(_toast1).then(function() { /** Instruction 1 */
+	 $mdToast.show(_toast2).then(function() { /** Instruction 2 */
+	  $mdToast.show(_toast3).then(function() { /** Instruction 3 */
+	   $mdToast.show(_toast4).then(function() { /** Instruction 4 */
+	    $mdToast.show(_toast5).then(function() { /** Instruction 5 */
+	    $mdToast.show(_toast6).then(function() { /** Instruction 6 */
+	    $mdToast.show(_toast7).then(function() { /** Instruction 7 */
+	    $mdToast.show(_toast8).then(function() { /** Instruction 8 */
+	     $mdToast.show(_toast9).then(function() { /** Instruction 9 */
+	     $mdToast.show(_toast10).then(function() { /** Instruction 10 */
+	      $mdToast.show(_toast11).then(function() { /** Instruction 11 */
+	      $mdToast.show(_toast12).then(function() { /** Instruction 12 */
+	       $mdToast.show(_toast13).then(function() { /** Instruction 13 */
+	        $mdToast.show(_toast14).then(function() { /** Instruction 14*/
+	         $mdToast.show(_toast15).then(function() { /** Instruction 15 */
+	          $mdToast.show(_toast16).then(function() { /** Instruction 16 */	});
+	});
+	 });
+	  });
+	   });
+	    });    
+	     });
+	      });
+	       });
+	        });
+	         });
+	          });
+	           });
                 });
-             });
-        };
+	              });
+	               });
+	                 };
         var self = this;
         self.selected = null;
         self.users = [];

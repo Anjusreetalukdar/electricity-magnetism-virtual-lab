@@ -2,7 +2,7 @@
     angular.module('users')
         .directive("experiment", directiveFunction)
 })();
-var temperature_Coef_resistance_stage, temp_Coef_container;
+var temperature_coef_resistance_stage, temp_coef_container;
 
 var resistor1_left_spot, bridge_resistor1_left_spot, bridge_resistor1_right_spot;
 
@@ -167,22 +167,22 @@ function directiveFunction() {
                 type: createjs.LoadQueue.IMAGE
             } ]);
             /** Stage creation */
-            temperature_Coef_resistance_stage = new createjs.Stage("demoCanvas");
-            temperature_Coef_resistance_stage.enableDOMEvents(true);
-            temperature_Coef_resistance_stage.enableMouseOver();
-            createjs.Touch.enable(temperature_Coef_resistance_stage);
+            temperature_coef_resistance_stage = new createjs.Stage("demoCanvas");
+            temperature_coef_resistance_stage.enableDOMEvents(true);
+            temperature_coef_resistance_stage.enableMouseOver();
+            createjs.Touch.enable(temperature_coef_resistance_stage);
             /** Main container - Temperature Coeficent of resistance */
-            temp_Coef_container = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
-            temperature_Coef_resistance_stage.addChild(temp_Coef_container); /** Append it in the stage */
+            temp_coef_container = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
+            temperature_coef_resistance_stage.addChild(temp_coef_container); /** Append it in the stage */
             /** Sub container - Temperature Coeficent of resistance */
             resistor_container_1 = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
-            temperature_Coef_resistance_stage.addChild(resistor_container_1); /** Append it in the stage */
+            temperature_coef_resistance_stage.addChild(resistor_container_1); /** Append it in the stage */
             /** Sub container - Temperature Coeficent of resistance */
             resistor_container_2 = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
-            temperature_Coef_resistance_stage.addChild(resistor_container_2); /** Append it in the stage */
+            temperature_coef_resistance_stage.addChild(resistor_container_2); /** Append it in the stage */
             /** Sub container - Temperature Coeficent of resistance */
             jockey_container = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
-            temperature_Coef_resistance_stage.addChild(jockey_container); /** Append it in the stage */
+            temperature_coef_resistance_stage.addChild(jockey_container); /** Append it in the stage */
             spotsHitDeclaration(); /** Circle declaration for connect the wires is created in this function */
             /** For rectangles  */
             right_resistor_click = new createjs.Shape();
@@ -190,14 +190,14 @@ function directiveFunction() {
 
             function handleComplete() {
                 /** Load image */
-                loadImages(queue.getResult("background"), "background", 0, 0, "", 1, 1, temp_Coef_container); /** Background */
-                loadImages(queue.getResult("resistor1_left_bridge_wire"), "resistor1_left_bridge_wire", 187, 380, "", 1, 0, temp_Coef_container); /** First resistor left to bridge left wire */
-                loadImages(queue.getResult("resistor1_right_bridge_wire"), "resistor1_right_bridge_wire", 212, 380, "", 1, 0, temp_Coef_container); /** First resistor right to bridge left wire */
-                loadImages(queue.getResult("resistor2_left_bridge_wire"), "resistor2_left_bridge_wire", 410, 382, "", 1, 0, temp_Coef_container); /** Second resistor left to bridge left wire */
-                loadImages(queue.getResult("resistor2_right_bridge_wire"), "resistor2_right_bridge_wire", 445, 382, "", 1, 0, temp_Coef_container); /** Second resistor right to bridge right wire */
-                loadImages(queue.getResult("bridge_battery_left_wire"), "bridge_battery_left_wire", 140, 325, "", 1, 0, temp_Coef_container); /** Battery left to bridge left wire */
-                loadImages(queue.getResult("bridge_battery_right_wire"), "bridge_battery_right_wire", 370, 327, "", 1, 0, temp_Coef_container); /** Battery right to bridge right wire */
-                loadImages(queue.getResult("galvanometer_bridge_wire"), "galvanometer_bridge_wire", 341, 467, "", 1, 0, temp_Coef_container); /** Galvanometer to  bridge wire */
+                loadImages(queue.getResult("background"), "background", 0, 0, "", 1, 1, temp_coef_container); /** Background */
+                loadImages(queue.getResult("resistor1_left_bridge_wire"), "resistor1_left_bridge_wire", 187, 380, "", 1, 0, temp_coef_container); /** First resistor left to bridge left wire */
+                loadImages(queue.getResult("resistor1_right_bridge_wire"), "resistor1_right_bridge_wire", 212, 380, "", 1, 0, temp_coef_container); /** First resistor right to bridge left wire */
+                loadImages(queue.getResult("resistor2_left_bridge_wire"), "resistor2_left_bridge_wire", 410, 382, "", 1, 0, temp_coef_container); /** Second resistor left to bridge left wire */
+                loadImages(queue.getResult("resistor2_right_bridge_wire"), "resistor2_right_bridge_wire", 445, 382, "", 1, 0, temp_coef_container); /** Second resistor right to bridge right wire */
+                loadImages(queue.getResult("bridge_battery_left_wire"), "bridge_battery_left_wire", 140, 325, "", 1, 0, temp_coef_container); /** Battery left to bridge left wire */
+                loadImages(queue.getResult("bridge_battery_right_wire"), "bridge_battery_right_wire", 370, 327, "", 1, 0, temp_coef_container); /** Battery right to bridge right wire */
+                loadImages(queue.getResult("galvanometer_bridge_wire"), "galvanometer_bridge_wire", 341, 467, "", 1, 0, temp_coef_container); /** Galvanometer to  bridge wire */
                 loadImages(queue.getResult("copper_strip_left"), "copper_strip_left", 140, 477, "", 1, 1, resistor_container_1); /** Copper strip left */
                 loadImages(queue.getResult("copper_strip_right"), "copper_strip_right", 543, 477, "", 1, 1, resistor_container_2); /** Copper strip right */
                 loadImages(queue.getResult("unknown_resistor_right"), "unknown_resistor_right", 590, 365, "", 1, 0, resistor_container_2); /** Right side unknown resistor */
@@ -218,16 +218,16 @@ function directiveFunction() {
                 loadImages(queue.getResult("circuit_diagram_unknown_left_connection"), "circuit_diagram_unknown_left_connection", 30, 20, "pointer", 0.6, 0, resistor_container_1); /** Circuit diagram :- Left side connection unknown resistor */
                 loadImages(queue.getResult("circuit_diagram_unknown_right_connection"), "circuit_diagram_unknown_right_connection", 30, 20, "pointer", 0.6, 0, resistor_container_2);/** Circuit diagram :- Right side connection unknown resistor */
                 /** Selected resistance display labels */
-                setText("back_right_resistor_value", 452, 340, "0.1 Ω", "black", 1.3, temp_Coef_container); /** Back side right resistor value */
-                setText("back_left_resistor_value", 205, 340, "0.1 Ω", "black", 1.3, temp_Coef_container); /** Back side left resistor value */
+                setText("back_right_resistor_value", 452, 340, "0.1 Ω", "black", 1.3, temp_coef_container); /** Back side right resistor value */
+                setText("back_left_resistor_value", 205, 340, "0.1 Ω", "black", 1.3, temp_coef_container); /** Back side left resistor value */
                 setText("right_fractional_resistor_value", 610, 450, "0.1 Ω", "black", 1.3, resistor_container_1); /** Right side resistor value */
                 setText("left_fractional_resistor_value", 60, 450, "0.1 Ω", "black", 1.3, resistor_container_2); /** Left side resistor value  */
-                setText("galvanometer_voltage_display", 543, 572, 45.06, "black", 1.3, temp_Coef_container); /** Galvanometer voltage  */
-                setText("galvanometer_unit", 583, 578, "mA", "black", 0.5, temp_Coef_container); /** Galvanometer voltage  */
-                setText("jockey_position_display", 156, 530, 0, "black", 1.3, temp_Coef_container); /** Jockey position values display  */                
+                setText("galvanometer_voltage_display", 541, 572, 45.06, "black", 1.3, temp_coef_container); /** Galvanometer voltage  */
+                setText("galvanometer_unit", 583, 578, "mA", "black", 0.5, temp_coef_container); /** Galvanometer voltage  */
+                setText("jockey_position_display", 156, 530, 0, "black", 1.3, temp_coef_container); /** Jockey position values display  */                
                 /** Draw shapes */
-                drawRectangle(right_resistor_click, "right_resistor_click", 450, 370, 80, 90, "black", temp_Coef_container, scope, "pointer"); /** Rectacle shape for clicking on the forward arrow on constant current supply machine*/
-                drawRectangle(left_resistor_click, "left_resistor_click", 160, 370, 80, 90, "black", temp_Coef_container, scope, "pointer"); /** Rectacle shape for clicking on the reverse arrow on constant current supply machine*/
+                drawRectangle(right_resistor_click, "right_resistor_click", 450, 370, 80, 90, "black", temp_coef_container, scope, "pointer"); /** Rectacle shape for clicking on the forward arrow on constant current supply machine*/
+                drawRectangle(left_resistor_click, "left_resistor_click", 160, 370, 80, 90, "black", temp_coef_container, scope, "pointer"); /** Rectacle shape for clicking on the reverse arrow on constant current supply machine*/
                 translationLabels(); /** Translation of strings using gettext */
                 initialisationOfVariables(); /** Initializing the variables */
                 createShapesForHit(scope); /** Create circle for wire connections */               
@@ -236,12 +236,12 @@ function directiveFunction() {
                 showDialogBoxFn(scope) /** Function to show dialog box  */
                 fractionalResistanceCheckBoxModels(scope, fractional_resistance_checkbox_model_array) /** Checkbox models for fractional  */
                 backResistanceCheckBoxModels(scope, back_resistance_checkbox_model_array) /** Checkbox models for back side resistance box */
-                setText("connection_value_id", 400, 50,total_wire_connection, "white", 1.3, temp_Coef_container); /** Total connection  label  */
-                setText("connection_label_id", 425, 50,connection_label, "white", 1.3, temp_Coef_container); /** Total connection  label  */
-                loadImages(queue.getResult("arrow"), "arrow", 300, 200, "pointer", 1, 1, temperature_Coef_resistance_stage); /** Connection :- Arrow */
+                setText("connection_value_id", 400, 50,total_wire_connection, "white", 1.3, temp_coef_container); /** Total connection  label  */
+                setText("connection_label_id", 425, 50,connection_label, "white", 1.3, temp_coef_container); /** Total connection  label  */
+                loadImages(queue.getResult("arrow"), "arrow", 300, 200, "pointer", 1, 1, temperature_coef_resistance_stage); /** Connection :- Arrow */
                 initialisationOfImages(); /** Function call for images used in the apparatus visibility */
                 /** Createjs stage updation happens in every interval */
-                temperature_Coef_resistance_stage.update();
+                temperature_coef_resistance_stage.update();
             }
             /** Function to show dialog box  */
             function showDialogBoxFn(scope) {
@@ -271,7 +271,7 @@ function directiveFunction() {
                 jockey_container.getChildByName("jockey").on("pressmove", function(evt) {
                     if (evt.stageX > 156 && evt.stageX < 543) {
                         jockey_container.getChildByName("jockey").x = evt.stageX;
-                        temp_Coef_container.getChildByName("jockey_position_display").x = evt.stageX;
+                        temp_coef_container.getChildByName("jockey_position_display").x = evt.stageX;
                     }
                     jockey_wire.graphics.clear();                    
                     var _jockey_position_change = ((jockey_container.getChildByName("jockey").x - 156) / 3.87).toFixed(1); /** Jockey position change */
@@ -280,7 +280,7 @@ function directiveFunction() {
                     scope.$apply();
                     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
                     /** Createjs stage updation happens in every interval */
-                    temperature_Coef_resistance_stage.update();
+                    temperature_coef_resistance_stage.update();
                 });
             }
             /** Circle declarations for connect the wires is created in this function */
@@ -327,23 +327,23 @@ function directiveFunction() {
             /** Create circle functions */
             function createShapesForHit() {
                 /** Connections from first reesistor to carey foster bridge */
-                drawCircle(resistor1_left_spot, "resistor1_left_spot", 193, 385, "black", 15, temp_Coef_container, scope); /** First resistor left spot creation */
-                drawCircle(bridge_resistor1_left_spot, "bridge_resistor1_left_spot", 265, 482, "black", 15, temp_Coef_container, scope); /** Carey foster bridge left spot creation (For first resistor connection) */
-                drawCircle(resistor1_right_spot, "resistor1_right_spot", 220, 385, "red", 15, temp_Coef_container, scope); /** First resistor right spot creation */
-                drawCircle(bridge_resistor1_right_spot, "bridge_resistor1_right_spot", 295, 485, "red", 15, temp_Coef_container, scope); /** Carey foster bridge right spot creation (For first resistor connection) */
+                drawCircle(resistor1_left_spot, "resistor1_left_spot", 193, 385, "black", 15, temp_coef_container, scope); /** First resistor left spot creation */
+                drawCircle(bridge_resistor1_left_spot, "bridge_resistor1_left_spot", 265, 482, "black", 15, temp_coef_container, scope); /** Carey foster bridge left spot creation (For first resistor connection) */
+                drawCircle(resistor1_right_spot, "resistor1_right_spot", 220, 385, "red", 15, temp_coef_container, scope); /** First resistor right spot creation */
+                drawCircle(bridge_resistor1_right_spot, "bridge_resistor1_right_spot", 295, 485, "red", 15, temp_coef_container, scope); /** Carey foster bridge right spot creation (For first resistor connection) */
                 /** Connections from second reesistor to carey foster bridge */
-                drawCircle(resistor2_left_spot, "resistor2_left_spot", 470, 385, "black", 15, temp_Coef_container, scope); /** Second resistor left spot creation */
-                drawCircle(bridge_resistor2_left_spot, "bridge_resistor2_left_spot", 417, 482, "black", 15, temp_Coef_container, scope); /** Carey foster bridge left spot creation (For second resistor connection) */
-                drawCircle(resistor2_right_spot, "resistor2_right_spot", 495, 385, "red", 15, temp_Coef_container, scope); /** Second resistor right spot creation */
-                drawCircle(bridge_resistor2_right_spot, "bridge_resistor2_right_spot", 450, 482, "red", 15, temp_Coef_container, scope); /** Carey foster bridge right spot creation (For second resistor connection) */
+                drawCircle(resistor2_left_spot, "resistor2_left_spot", 470, 385, "black", 15, temp_coef_container, scope); /** Second resistor left spot creation */
+                drawCircle(bridge_resistor2_left_spot, "bridge_resistor2_left_spot", 417, 482, "black", 15, temp_coef_container, scope); /** Carey foster bridge left spot creation (For second resistor connection) */
+                drawCircle(resistor2_right_spot, "resistor2_right_spot", 495, 385, "red", 15, temp_coef_container, scope); /** Second resistor right spot creation */
+                drawCircle(bridge_resistor2_right_spot, "bridge_resistor2_right_spot", 450, 482, "red", 15, temp_coef_container, scope); /** Carey foster bridge right spot creation (For second resistor connection) */
                 /** Connections from battery to carey foster bridge */
-                drawCircle(bridge_battery_left_spot, "bridge_battery_left_spot", 265, 482, "red", 15, temp_Coef_container, scope); /** Carey foster bridge left spot creation (For battery connection) */
-                drawCircle(battery_left_spot, "battery_left_spot", 325, 335, "red", 15, temp_Coef_container, scope); /** Battery left spot creation  */
-                drawCircle(bridge_battery_right_spot, "bridge_battery_right_spot", 450, 482, "black", 15, temp_Coef_container, scope); /** Carey foster bridge right spot creation (For battery connection) */
-                drawCircle(battery_right_spot, "battery_right_spot", 375, 335, "black", 15, temp_Coef_container, scope); /** Battery rigth spot creation  */
+                drawCircle(bridge_battery_left_spot, "bridge_battery_left_spot", 265, 482, "red", 15, temp_coef_container, scope); /** Carey foster bridge left spot creation (For battery connection) */
+                drawCircle(battery_left_spot, "battery_left_spot", 325, 335, "red", 15, temp_coef_container, scope); /** Battery left spot creation  */
+                drawCircle(bridge_battery_right_spot, "bridge_battery_right_spot", 450, 482, "black", 15, temp_coef_container, scope); /** Carey foster bridge right spot creation (For battery connection) */
+                drawCircle(battery_right_spot, "battery_right_spot", 375, 335, "black", 15, temp_coef_container, scope); /** Battery rigth spot creation  */
                 /** Connections from galvanometer to carey foster bridge */
-                drawCircle(galvanometer_right_spot, "galvanometer_right_spot", 603, 586, "red", 15, temp_Coef_container, scope); /** Galvanometer right spot creation for connecting to carey foster bridge */
-                drawCircle(galvanometer_bridge_spot, "galvanometer_bridge_spot", 352, 482, "red", 15, temp_Coef_container, scope); /** Carey foster bridge center spot creation for connecting to galvanometer  */
+                drawCircle(galvanometer_right_spot, "galvanometer_right_spot", 603, 586, "red", 15, temp_coef_container, scope); /** Galvanometer right spot creation for connecting to carey foster bridge */
+                drawCircle(galvanometer_bridge_spot, "galvanometer_bridge_spot", 352, 482, "red", 15, temp_coef_container, scope); /** Carey foster bridge center spot creation for connecting to galvanometer  */
                 /** Connections from right fractional resistor to carey foster bridge */
                 drawCircle(right_fractional_resistor_top_spot, "right_fractional_resistor_top_spot", 610, 465, "red", 15, resistor_container_1, scope); /** Right fractional resistor top spot */
                 drawCircle(right_fractional_resistor_bottom_spot, "right_fractional_resistor_bottom_spot", 620, 480, "black", 15, resistor_container_1, scope); /** Right fractional resistor bottom spot */
@@ -380,18 +380,18 @@ function directiveFunction() {
                 shapeName.on("mousedown", function(evt) {
                     this.parent.addChild(this);
                     this.offset = {
-                        x: this.x - evt.stageX / temperature_Coef_resistance_stage.scaleX,
-                        y: this.y - evt.stageY / temperature_Coef_resistance_stage.scaleY
+                        x: this.x - evt.stageX / temperature_coef_resistance_stage.scaleX,
+                        y: this.y - evt.stageY / temperature_coef_resistance_stage.scaleY
                     };
                 });
                 shapeName.on("pressmove", function(evt) {
-                    this.x = (evt.stageX / temperature_Coef_resistance_stage.scaleX) + this.offset.x;
-                    this.y = (evt.stageY / temperature_Coef_resistance_stage.scaleY) + this.offset.y;
+                    this.x = (evt.stageX / temperature_coef_resistance_stage.scaleX) + this.offset.x;
+                    this.y = (evt.stageY / temperature_coef_resistance_stage.scaleY) + this.offset.y;
                     shapeName.x = this.x;
                     shapeName.y = this.y;
                     line.graphics.clear();
                     /** Createjs stage updation happens in every interval */
-                    temperature_Coef_resistance_stage.update();
+                    temperature_coef_resistance_stage.update();
                     if (line_flag == false) {
                         line.graphics.moveTo(xPos, yPos).setStrokeStyle(3).beginStroke(color).lineTo(this.x, this.y);
                         container.addChild(line);
@@ -399,7 +399,7 @@ function directiveFunction() {
                     shapeName.on("pressup", function(evt) {
                         line.graphics.clear();
                         /** Createjs stage updation happens in every interval */
-                        temperature_Coef_resistance_stage.update();
+                        temperature_coef_resistance_stage.update();
                         shapeName.x = xPos;
                         shapeName.y = yPos;
                         if(line_flag==true) {
@@ -419,7 +419,7 @@ function directiveFunction() {
                     });
                     checkConnection(name, scope,shapeName.x,shapeName.y); /** check hit occur with wires */
                     /** Createjs stage updation happens in every interval */
-                    temperature_Coef_resistance_stage.update();
+                    temperature_coef_resistance_stage.update();
                 });
             }
             /** check hit between display wires */
@@ -427,59 +427,59 @@ function directiveFunction() {
                 switch (name) {
                     /** Check connections from first reesistor left to carey foster bridge */
                     case "resistor1_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_resistor1_left_spot"), "resistor1_left_bridge_wire", name, temp_Coef_container, scope, xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_resistor1_left_spot"), "resistor1_left_bridge_wire", name, temp_coef_container, scope, xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge to first reesistor left */
                     case "bridge_resistor1_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("resistor1_left_spot"), "resistor1_left_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("resistor1_left_spot"), "resistor1_left_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from first reesistor right to carey foster bridge */
                     case "resistor1_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_resistor1_right_spot"), "resistor1_right_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_resistor1_right_spot"), "resistor1_right_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge to first reesistor right */
                     case "bridge_resistor1_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("resistor1_right_spot"), "resistor1_right_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("resistor1_right_spot"), "resistor1_right_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from second reesistor left to carey foster bridge */
                     case "resistor2_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_resistor2_left_spot"), "resistor2_left_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_resistor2_left_spot"), "resistor2_left_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge to second reesistor left */
                     case "bridge_resistor2_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("resistor2_left_spot"), "resistor2_left_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("resistor2_left_spot"), "resistor2_left_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from second reesistor right to carey foster bridge */
                     case "resistor2_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_resistor2_right_spot"), "resistor2_right_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_resistor2_right_spot"), "resistor2_right_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge to second reesistor right */
                     case "bridge_resistor2_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("resistor2_right_spot"), "resistor2_right_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("resistor2_right_spot"), "resistor2_right_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge left to battery left */
                     case "bridge_battery_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("battery_left_spot"), "bridge_battery_left_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("battery_left_spot"), "bridge_battery_left_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from battery left to carey foster bridge left */
                     case "battery_left_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_battery_left_spot"), "bridge_battery_left_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_battery_left_spot"), "bridge_battery_left_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge right to battery right */
                     case "bridge_battery_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("battery_right_spot"), "bridge_battery_right_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("battery_right_spot"), "bridge_battery_right_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from battery right to carey foster bridge right */
                     case "battery_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("bridge_battery_right_spot"), "bridge_battery_right_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("bridge_battery_right_spot"), "bridge_battery_right_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge center to galvanometer right */
                     case "galvanometer_bridge_spot":
-                        checkHit(temp_Coef_container.getChildByName("galvanometer_right_spot"), "galvanometer_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("galvanometer_right_spot"), "galvanometer_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from galvanometer right to carey foster bridge center */
                     case "galvanometer_right_spot":
-                        checkHit(temp_Coef_container.getChildByName("galvanometer_bridge_spot"), "galvanometer_bridge_wire", name, temp_Coef_container, scope,xPos, yPos);
+                        checkHit(temp_coef_container.getChildByName("galvanometer_bridge_spot"), "galvanometer_bridge_wire", name, temp_coef_container, scope,xPos, yPos);
                         break;
                         /** Check connections from carey foster bridge top to right fractional resistor top */
                     case "right_fractional_resistor_bridge_top_spot":
@@ -551,9 +551,9 @@ function directiveFunction() {
             function checkHit(spotName, wire, name, container, scope,xPos, yPos) {
                 spotName.alpha = 0.01; /** Shows the destination point */ 
                 /** Show pointing arrow */
-                temperature_Coef_resistance_stage.getChildByName("arrow").visible=true;
-                temperature_Coef_resistance_stage.getChildByName("arrow").x=spotName.x+5;
-                temperature_Coef_resistance_stage.getChildByName("arrow").y=spotName.y-20;
+                temperature_coef_resistance_stage.getChildByName("arrow").visible=true;
+                temperature_coef_resistance_stage.getChildByName("arrow").x=spotName.x+5;
+                temperature_coef_resistance_stage.getChildByName("arrow").y=spotName.y-20;
                 var ptL = spotName.globalToLocal(xPos, yPos);                
                 if (spotName.hitTest(ptL.x, ptL.y)) {
                     line_flag = true;  
@@ -568,7 +568,7 @@ function directiveFunction() {
                     line.graphics.clear();
                     container.removeChild(line);
                     spotName.alpha = 0.01;
-                    temperature_Coef_resistance_stage.getChildByName("arrow").visible=false;
+                    temperature_coef_resistance_stage.getChildByName("arrow").visible=false;
                     container.getChildByName(wire).alpha = 1;
                     spotName.mouseEnabled = false;
                     container.getChildByName(name).mouseEnabled = false;
@@ -582,7 +582,7 @@ function directiveFunction() {
             function releaseHit(spot, name, container) {
                 container.getChildByName(name).on("pressup", function(evt) {
                     spot.alpha = 0.01; 
-                    temperature_Coef_resistance_stage.getChildByName("arrow").visible=false;
+                    temperature_coef_resistance_stage.getChildByName("arrow").visible=false;
                 });
             }
             /** Draw rectangle  */
@@ -597,7 +597,7 @@ function directiveFunction() {
                     dialogBoxShow("back_resistor_click", true, false);
                     scope.$apply();
                     /** Createjs stage updation happens in every interval */
-                    temperature_Coef_resistance_stage.update();
+                    temperature_coef_resistance_stage.update();
                 });
             }
             /** Add all the strings used for the language translation here. '_' is the short cut for calling the gettext function defined in the gettext-definition.js */
@@ -682,8 +682,8 @@ function directiveFunction() {
             function initialisationOfImages() {
                 resistor_container_2.alpha = 0;
                 resistor_container_2.getChildByName("right_unknown_resistor_top_spot").visible = resistor_container_2.getChildByName("right_unknown_resistor_bottom_spot").visible = resistor_container_2.getChildByName("right_unknown_resistor_bridge_top_spot").visible = resistor_container_2.getChildByName("right_unknown_resistor_bridge_bottom_spot").visible = resistor_container_1.getChildByName("left_unknown_resistor_top_spot").visible = resistor_container_1.getChildByName("left_unknown_resistor_bottom_spot").visible = resistor_container_1.getChildByName("left_unknown_resistor_bridge_top_spot").visible = resistor_container_1.getChildByName("left_unknown_resistor_bridge_bottom_spot").visible = false;
-                temp_Coef_container.getChildByName("galvanometer_voltage_display").visible = false;
-                temperature_Coef_resistance_stage.getChildByName("arrow").visible=false;
+                temp_coef_container.getChildByName("galvanometer_voltage_display").visible = false;
+                temperature_coef_resistance_stage.getChildByName("arrow").visible=false;
             }
             /** Checkbox models for fractional */
             function fractionalResistanceCheckBoxModels(scope, checkbox_model_array) {              
@@ -741,11 +741,11 @@ function selectResistorFn(scope) {
     scope.unknown_slider_show = boolean_array[scope.resistor_model]; /** Show length slider, diameter slider and temperature slider */
     total_connection = total_connection_array[scope.resistor_model]; 
     total_wire_connection = total_wire_connection_array[scope.resistor_model];   
-    temp_Coef_container.getChildByName("galvanometer_voltage_display").visible = false;
+    temp_coef_container.getChildByName("galvanometer_voltage_display").visible = false;
     connectionCompleteFn(scope);
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Select resistance drop down change */
 function selectUnknownResistanceFn(scope) {
@@ -758,7 +758,7 @@ function selectUnknownResistanceFn(scope) {
     }
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Reverse connection button click  */
 function reverseConnectionFn(scope) {
@@ -851,7 +851,7 @@ function reverseConnectionFn(scope) {
     }
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Resistor resistor length change */
 function resistorLengthChangeFN(scope) {
@@ -872,12 +872,12 @@ function temperatureChangeFN(scope) {
 function jockeyPositionChangeFN(scope) {
     jockey_x_position = scope.jockey_position_model * 3.87 + 156;
     jockey_container.getChildByName("jockey").x = jockey_x_position;
-    temp_Coef_container.getChildByName("jockey_position_display").x = jockey_x_position;
+    temp_coef_container.getChildByName("jockey_position_display").x = jockey_x_position;
     jockey_wire.graphics.clear();
     drawJockeyConnection(jockey_x_position + 3, scope);
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Drawing wire of jockey to galavanometer */
 function drawJockeyConnection(jockey_wire_position, scope) { /** Function call for images used in the apparatus visibility */
@@ -888,7 +888,7 @@ function drawJockeyConnection(jockey_wire_position, scope) { /** Function call f
     jockey_wire.graphics.bezierCurveTo(351, 553, 351, 553, 358, 536);
     jockey_wire.graphics.bezierCurveTo(365, 519, 365, 519, jockey_wire_position, 478);
     jockey_connect_position = scope.jockey_position_model;
-    temp_Coef_container.getChildByName("jockey_position_display").text = scope.jockey_position_model;
+    temp_coef_container.getChildByName("jockey_position_display").text = scope.jockey_position_model;
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     jockey_container.addChild(jockey_wire);
 }
@@ -909,11 +909,11 @@ function checkBackResistanceBoxFn(check_selected, resistance_selected, scope) {
         resistance_back_total -= resistance_selected;
     }
     resistance_back_total = Math.abs(resistance_back_total);    
-    temp_Coef_container.getChildByName("back_right_resistor_value").text = resistance_back_total.toFixed(1)+" Ω";
-    temp_Coef_container.getChildByName("back_left_resistor_value").text = resistance_back_total.toFixed(1)+" Ω";
+    temp_coef_container.getChildByName("back_right_resistor_value").text = resistance_back_total.toFixed(1)+" Ω";
+    temp_coef_container.getChildByName("back_left_resistor_value").text = resistance_back_total.toFixed(1)+" Ω";
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 };
 /** Select resistance from fractional resistance the dialog box  */
 function checkFractionalResistanceBoxFn(check_selected, resistance_selected, scope) {
@@ -927,7 +927,7 @@ function checkFractionalResistanceBoxFn(check_selected, resistance_selected, sco
     resistor_container_2.getChildByName("left_fractional_resistor_value").text = resistance_total.toFixed(1)+" Ω";
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 };
 /** Function to calculate volatage Of galvanometer */
 function volatageOfGalvanometerCalculation(scope) {
@@ -938,8 +938,6 @@ function volatageOfGalvanometerCalculation(scope) {
     var _supply_voltage = 1.5; /** Voltage supply from external source */
     var _resistance_per_unit_length_wire = 4; /** Resistance per unit length of wire in meter bridge*/
     resistance_of_wire=(resistivity*length_of_wire*Math.pow(10, -2))/(3.14*Math.pow(diameter_of_wire*Math.pow(10, -2)/2,2))*(1+temp_coefficient*temperature_of_water);
-   /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
     if (scope.resistor_model==1) { // Unknown resistor
         if (resistor_container_2.alpha == 1) { /** Unknown resistor reverse connection */            
             _resistance_R3 = _resistance_per_unit_length_wire * ((jockey_connect_position) * Math.pow(10, -2)) + _resistance_R3_selected;
@@ -948,8 +946,6 @@ function volatageOfGalvanometerCalculation(scope) {
             _resistance_R3 = _resistance_per_unit_length_wire * ((jockey_connect_position) * Math.pow(10, -2)) + resistance_of_wire;
             _resistance_R4 = _resistance_per_unit_length_wire * ((100 - jockey_connect_position) * Math.pow(10, -2)) + _resistance_R3_selected;
        }       
-        /** Createjs stage updation happens in every interval */
-        temperature_Coef_resistance_stage.update();       
     } else { // Known resistor          
         if (resistor_container_1.alpha == 0) { /** Known resistor reverse connection */            
             _resistance_R3 = 0.01 + _resistance_per_unit_length_wire * ((jockey_connect_position) * Math.pow(10, -2));
@@ -960,8 +956,6 @@ function volatageOfGalvanometerCalculation(scope) {
         }
         _resistance_R3=Math.floor(_resistance_R3*100)/100;
         _resistance_R4=Math.floor(_resistance_R4*100)/100;  
-        /** Createjs stage updation happens in every interval */
-        temperature_Coef_resistance_stage.update();
     }
       
     /**convert resistance of wire in  exponential form*/
@@ -972,11 +966,9 @@ function volatageOfGalvanometerCalculation(scope) {
               R1,R2,R3,R4 , Resistance value for the resistance box                  
     */    
     voltage_of_galvanometer = (_resistance_R1 / (_resistance_R1 + _resistance_R2) - _resistance_R3 / (_resistance_R3 + _resistance_R4)) * _supply_voltage * 100;
+    temp_coef_container.getChildByName("galvanometer_voltage_display").text =voltage_of_galvanometer.toFixed(1);    
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
-    temp_Coef_container.getChildByName("galvanometer_voltage_display").text = voltage_of_galvanometer.toFixed(2);    
-    /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Function for completing connection */
 function connectionCompleteFn(scope) {     
@@ -984,21 +976,21 @@ function connectionCompleteFn(scope) {
     if(scope.resistor_model==0){/** Know resistor selected */
         _total_connection_change=_total_connection_change+total_count;
     }
-    temp_Coef_container.getChildByName("connection_value_id").text =_total_connection_change;
+    temp_coef_container.getChildByName("connection_value_id").text =_total_connection_change;
     if(_total_connection_change<=0){ /** Connection completed : Hide labels*/
-        temp_Coef_container.getChildByName("connection_value_id").visible=temp_Coef_container.getChildByName("connection_label_id").visible=false;
+        temp_coef_container.getChildByName("connection_value_id").visible=temp_coef_container.getChildByName("connection_label_id").visible=false;
     }else{
-        temp_Coef_container.getChildByName("connection_value_id").visible=temp_Coef_container.getChildByName("connection_label_id").visible=true;
+        temp_coef_container.getChildByName("connection_value_id").visible=temp_coef_container.getChildByName("connection_label_id").visible=true;
     }
     /** Connection completed : Display galvanometer reading*/
     if((resistor_container_2.getChildByName("fractional_resistor_bridge_bottom_wire_left").alpha == 1 && resistor_container_2.getChildByName("fractional_resistor_bridge_top_wire_left").alpha == 1 ) || ( resistor_container_1.getChildByName("fractional_resistor_bridge_bottom_wire_right").alpha == 1 && resistor_container_1.getChildByName("fractional_resistor_bridge_top_wire_right").alpha == 1)){
         if (wire_num_int >= total_connection) {        
-            temp_Coef_container.getChildByName("galvanometer_voltage_display").visible = true;
+            temp_coef_container.getChildByName("galvanometer_voltage_display").visible = true;
         }
     }
     volatageOfGalvanometerCalculation(scope); /** Function to calculate volatage Of galvanometer */
     /** Createjs stage updation happens in every interval */
-    temperature_Coef_resistance_stage.update();
+    temperature_coef_resistance_stage.update();
 }
 /** Reset the experiment */
 function reset(scope) {
