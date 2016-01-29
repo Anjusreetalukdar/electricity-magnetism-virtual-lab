@@ -5,29 +5,17 @@
 
 var barkhausen_stage, canvas;
 
-var shape = new createjs.Shape();
+var coil_count,tick,graph_draw_timer,audio,wire_end_x,graph_timer,start_x,end_x,coil_area,wire_x,show_gph;
 
-var line = new createjs.Shape();
+var b_intial,b_final,emf,time,count,final_x,final_y,reduced_emf,initial_x,magnet_bitmap,rod_flag;
 
-var coil_count, tick, graph_draw_timer;
+var reduced_emf,line_x,line_y,graph_x_initial,graph_y_initial,graph_x_final,sound;
 
-var xPos, newPos, audio;
-
-var helpArray = dataplotArray = [];
-
-var gt, tick; /** Object for Gettext.js and stage update timer */
-
-var wire_end_X, graph_timer, distance_x, distance_y, coil_area, b_intial, b_final, emf, time, count, final_x, final_y, reduced_emf, initial_x, initial_y;
-
-var magnet_bitmap, rod_flag, wire_x;
+var help_array = [];
 
 var graph_line = new createjs.Shape();
 
 var line = new createjs.Shape();
-
-var show_gph = false;
-
-var reducedEmf, lineX, lineY, graphXinitial, graphYinitial, graphXfinal;
 
 function directiveFunction() {
 	return {
@@ -124,23 +112,23 @@ function directiveFunction() {
 				setMagnet(queue.getResult("magnet"), "magnet", 400, 120, 1);
 				setText("moveMe", 450, 55, "", "gray", 1.4);
 				tick = setInterval(updateTimer, 100); /** Stage update function in a timer */
-				for (var i = 2; i <= 8; i++) {
+				for ( var i = 2; i <= 8; i++ ) {
 					barkhausen_stage.getChildByName("coil_under" + (i)).visible = false;
 					barkhausen_stage.getChildByName("coil_top" + (i)).visible = false;
 				}
-				wire_end_X = barkhausen_stage.getChildByName("wire_end_piece").x;
+				wire_end_x = barkhausen_stage.getChildByName("wire_end_piece").x;
 				initialisationOfVariables(); /** Initializing the variables */
 				translationLabels(); /** Translation of strings using gettext */
 				volControler(0);
 				graph_line.graphics.moveTo(initial_x, final_y).setStrokeStyle(1).beginStroke("#0000ff").lineTo(final_x, final_y);
-				lineY = graphYinitial;
-				lineX = graphXinitial;
+				line_y = graph_y_initial;
+				line_x = graph_x_initial;
 				barkhausen_stage.addChild(graph_line);
 			}
 
 			/** Add all the strings used for the language translation here. '_' is the shortcut for calling the gettext function defined in the gettext-definition.js */
 			function translationLabels() {
-				helpArray = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("Next"), _("Close")];
+				help_array = [_("help1"), _("help2"), _("help3"), _("help4"), _("help5"), _("Next"), _("Close")];
 				scope.variables = _("Variables");
 				scope.number_of_coils = _("No of coils:");
 				scope.measurements = _("Measurements");
@@ -157,32 +145,32 @@ function directiveFunction() {
 
 /** Function for drawing the graph */
 function drawGraph() {
-	if (show_gph) { /** If show graph checkbox is checked */
-		if (lineX >= graphXfinal) { /** If the x value of drawing line graph is greater than the x final value */
+	if ( show_gph ) { /** If show graph checkbox is checked */
+		if (line_x >= graph_x_final) { /** If the x value of drawing line graph is greater than the x final value */
 			graph_line.graphics.clear(); /** Clear the graph */
 			graph_line.graphics.setStrokeStyle(0.5).beginStroke("#0000ff");
-			lineX = graphXinitial; /** Set the line graph x value as initial value and the graph again start from the initial value */
-			graph_line.graphics.moveTo(lineX, lineY);
+			line_x = graph_x_initial; /** Set the line graph x value as initial value and the graph again start from the initial value */
+			graph_line.graphics.moveTo(line_x, line_y);
 		} else {
-			lineX += 0.1; /** Drawing the graph */
+			line_x += 0.1; /** Drawing the graph */
 			if (emf != 0) {
 				if ((barkhausen_stage.getChildByName("magnet").y < (barkhausen_stage.getChildByName("coil_top1").y - 100)) || (barkhausen_stage.getChildByName("magnet").y > (barkhausen_stage.getChildByName("coil_top1").y + 100))) { /** Calculating the reduced emf with respect to the y position on magnet and coil */
 					emf = 0;
-					reducedEmf = Math.abs(emf) / 3000;
+					reduced_emf = Math.abs(emf) / 3000;
 				} else {
-					reducedEmf = Math.abs(emf) / 500;
+					reduced_emf = Math.abs(emf) / 500;
 				}
 				if (!rod_flag) {
-					reducedEmf = Math.abs(emf) / 2500;
+					reduced_emf = Math.abs(emf) / 2500;
 				}
-				lineY = lineY - ((reducedEmf));
-				graph_line.graphics.lineTo(lineX, lineY);
-				lineY = graphYinitial;
-				lineY = lineY + ((reducedEmf));
-				graph_line.graphics.lineTo(lineX, lineY);
+				line_y = line_y - ((reduced_emf));
+				graph_line.graphics.lineTo(line_x, line_y);
+				line_y = graph_y_initial;
+				line_y = line_y + ((reduced_emf));
+				graph_line.graphics.lineTo(line_x, line_y);
 			} else {
-				lineY = graphYinitial;
-				graph_line.graphics.lineTo(lineX, lineY);
+				line_y = graph_y_initial;
+				graph_line.graphics.lineTo(line_x, line_y);
 			}
 		}
 	}
@@ -192,29 +180,29 @@ function drawGraph() {
 function volControler(vol) {
 	var volm = Math.abs(vol / 1000).toFixed(2);
 	volm = (volm + coil_count) / 50;
-	if (volm > 1) {
+	if ( volm > 1 ) {
 		volm = 1;
 	}
 	audio.volume = volm;
 }
 
 /** emf calculating function */
-function calculateEMF() {
+function calculateEmf() {
 	count++;
-	if (rod_flag) { /** If rod is visible, volume will vary depend on the emf, higher the emf, high the volume is*/
+	if ( rod_flag ) { /** If rod is visible, volume will vary depend on the emf, higher the emf, high the volume is */
 		volControler(emf);
 	}
-	distance_x = (barkhausen_stage.getChildByName("magnet").x - barkhausen_stage.getChildByName("coil_under" + (coil_count / 2)).x) / coil_area; /** Distance x of magnet and coil */
-	distance_y = (barkhausen_stage.getChildByName("coil_under" + (coil_count / 2)).x - barkhausen_stage.getChildByName("magnet").x) / coil_area; /** Distance y of magnet and coil */
-	var final_distance = Math.sqrt(distance_x * distance_x + distance_y * distance_y);
-	if (final_distance < 1) {
-		b_intial = s * 2;
+	start_x = (barkhausen_stage.getChildByName("magnet").x - barkhausen_stage.getChildByName("coil_under" + (coil_count / 2)).x) / coil_area; /** Distance x of magnet and coil */
+	end_x = (barkhausen_stage.getChildByName("coil_under" + (coil_count / 2)).x - barkhausen_stage.getChildByName("magnet").x) / coil_area; /** Distance y of magnet and coil */
+	var _final_distance = Math.sqrt(start_x * start_x + end_x * end_x);
+	if ( _final_distance < 1 ) {
+		b_intial = sound * 2;
 	} else {
-		b_intial = s * Math.pow(1 / final_distance, 2) * (3 * distance_x * distance_x / (final_distance * final_distance) - 1);
+		b_intial = sound * Math.pow(1 / _final_distance, 2) * (3 * start_x * start_x / (_final_distance * _final_distance) - 1);
 	}
-	var dt = count / 1000 - time;
-	emf = coil_count * ((b_intial - b_final) / dt);
-	if ((isNaN(emf)) || (emf < 0)) {
+	var _dt = count / 1000 - time;
+	emf = coil_count * ((b_intial - b_final) / _dt);
+	if ( (isNaN(emf)) || (emf < 0) ) {
 		emf = 0;
 	}
 	b_final = b_intial;
@@ -223,7 +211,7 @@ function calculateEMF() {
 
 /** Stage update timer */
 function updateTimer() {
-	calculateEMF(); /** emf calculating function */
+	calculateEmf(); /** Emf calculating function */
 	barkhausen_stage.update();
 }
 
@@ -273,15 +261,15 @@ function moveMagnet() {
 
 /** All the texts loading and added to the stage */
 function setText(name, textX, textY, value, color, fontSize) {
-	var text = new createjs.Text();
-	text.x = textX;
-	text.y = textY;
-	text.textBaseline = "alphabetic";
-	text.name = name;
-	text.font = "bold " + fontSize + "em Tahoma";
-	text.text = value;
-	text.color = color;
-	barkhausen_stage.addChild(text);
+	var _text = new createjs.Text();
+	_text.x = textX;
+	_text.y = textY;
+	_text.textBaseline = "alphabetic";
+	_text.name = name;
+	_text.font = "bold " + fontSize + "em Tahoma";
+	_text.text = value;
+	_text.color = color;
+	barkhausen_stage.addChild(_text);
 }
 
 /** Load all the images using in the experiment using createjs */
@@ -302,28 +290,26 @@ function loadImages(image, name, xPos, yPos, sFactor) {
 
 /** Initialisation of all variables here */
 function initialisationOfVariables() {
-	time_int = 0;
-	distance_x, distance_y, coil_area = 70;
+	start_x = end_x = coil_area = 70;
 	b_intial = 0;
 	b_final = 0;
 	emf = 0;
-	s = 1;
+	sound = 1;
 	time = 0;
 	count = 0;
 	final_x = 48;
 	final_y = 102;
 	reduced_emf = 0;
 	initial_x = 48;
-	lineX = 0;
-	initial_y = 102;
-	lineY = 0;
+	line_x = 0;
+	line_y = 0;
 	wire_x = 300;
 	coil_count = 2;
-	reducedEmf = 0;
-	graphXinitial = 50;
-	graphYinitial = 102;
-	graphXfinal = 335;
+	graph_x_initial = 50;
+	graph_y_initial = 102;
+	graph_x_final = 335;
 	rod_flag = true;
+	show_gph = false;
 	barkhausen_stage.getChildByName("moveMe").text = _("Move Me");
 	barkhausen_stage.getChildByName("graph").visible = false;
 	graph_timer = setInterval(drawGraph, 10);
@@ -343,7 +329,6 @@ function displayRod(chked) {
 }
 
 /** Show graph checkbox event */
-
 function displayGraph(scope) {
 	if (scope.graph_show == false) { /** If graph is not showing */
 		scope.graph_show = true;
@@ -385,6 +370,7 @@ function drawWire() {
 	barkhausen_stage.addChild(line);
 }
 
+/** Reset the experiment here */
 function resetExperiment() {
 	window.location.reload();
 }
