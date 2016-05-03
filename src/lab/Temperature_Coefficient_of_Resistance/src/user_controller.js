@@ -1,5 +1,5 @@
 (function() {
-    angular.module('users', ['FBAngular','ngTouch'])
+    angular.module('users', ['FBAngular'])
         .controller('UserController', [
         '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$scope', '$element', 'Fullscreen', '$mdToast', '$animate',
     UserController]);

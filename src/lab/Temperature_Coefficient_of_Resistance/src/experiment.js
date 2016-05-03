@@ -170,9 +170,7 @@ function directiveFunction() {
             temperature_coef_resistance_stage = new createjs.Stage("demoCanvas");
             temperature_coef_resistance_stage.enableDOMEvents(true);
             temperature_coef_resistance_stage.enableMouseOver();
-            //temperature_coef_resistance_stage.preventSelection = true;
             createjs.Touch.enable(temperature_coef_resistance_stage);
-
             /** Main container - Temperature Coeficent of resistance */
             temp_coef_container = new createjs.Container(); /** Creating Temperature Coefficient of Resistance container */
             temperature_coef_resistance_stage.addChild(temp_coef_container); /** Append it in the stage */
@@ -372,7 +370,7 @@ function directiveFunction() {
                 container.addChild(shapeName);
                 shapeName.name = name;
                 shapeName.cursor = "pointer";
-                shapeName.alpha = 0.1;
+                shapeName.alpha = 0.01;
                 initialX = xPos;
                 initialY = yPos;
                 shapeName.graphics.setStrokeStyle(2);
@@ -380,22 +378,13 @@ function directiveFunction() {
                 shapeName.x = xPos;
                 shapeName.y = yPos;
                 shapeName.on("mousedown", function(evt) {
-                    console.log("Mouse")
                     this.parent.addChild(this);
                     this.offset = {
                         x: this.x - evt.stageX / temperature_coef_resistance_stage.scaleX,
                         y: this.y - evt.stageY / temperature_coef_resistance_stage.scaleY
                     };
                 });
-                /*temperature_coef_resistance_stage.on("stagemousedown", function(evt) {
-                    createjs.Touch.enable(temperature_coef_resistance_stage);
-                    shapeName.on("pressmove", function (evt) {
-                        console.log("Moveee")
-                    });
-                }); */                                                                                                                                                                                                                                                                                        
-                
-                shapeName.on("pressmove", function (evt) {
-                    console.log("Move")
+                shapeName.on("pressmove", function(evt) {
                     this.x = (evt.stageX / temperature_coef_resistance_stage.scaleX) + this.offset.x;
                     this.y = (evt.stageY / temperature_coef_resistance_stage.scaleY) + this.offset.y;
                     shapeName.x = this.x;
@@ -408,7 +397,6 @@ function directiveFunction() {
                         container.addChild(line);
                     }
                     shapeName.on("pressup", function(evt) {
-                        console.log("Press")
                         line.graphics.clear();
                         /** Createjs stage updation happens in every interval */
                         temperature_coef_resistance_stage.update();
