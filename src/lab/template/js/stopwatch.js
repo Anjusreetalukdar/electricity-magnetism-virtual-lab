@@ -15,6 +15,8 @@ var hour=0, minute=0, second=0, millisecond=0, milli=0, total_time=0;
 
 var time_array=[];
 
+var listner_play;
+
 //clock interval runs between 1 ms and 0.1ms 
 function createStopwatch(stage,x,y,interval) {
 	/** Creating  container */	
@@ -22,17 +24,17 @@ function createStopwatch(stage,x,y,interval) {
 	clockContainer=new createjs.Container();
 	clockContainer.name="container";
 	stage.addChild(clockContainer);
-	load_stopwatch_image("bg","../common/images/stopwatch.svg",x,y);
-	load_stopwatch_image("play","../common/images/play.svg",x+100,y+95);
-	load_stopwatch_image("pause","../common/images/stop.svg",x+100,y+95);	
-	load_stopwatch_image("reset","../common/images/reset.svg",x+140,y+95);	
+	load_stopwatch_image("bg","../template/images/stopwatch.svg",x,y);
+	load_stopwatch_image("play","../template/images/play.svg",x+100,y+95);
+	load_stopwatch_image("pause","../template/images/stop.svg",x+100,y+95);	
+	load_stopwatch_image("reset","../template/images/reset.svg",x+140,y+95);	
 	getName("pause").visible=false;
 	setText("stopWatchHr",x+66,y+73);	
 	setText("stopWatchMin",x+100,y+73);
 	setText("stopWatchSec",x+135,y+73);	
 	setText("stopWatchmilli",x+170,y+73);
 	initializeText("00","00","00","000",stage);
-	clockContainer.getChildByName("play").on("click",function(){startWatch(stage)});
+	listner_play = clockContainer.getChildByName("play").on("click",function(){startWatch(stage)});
 	clockContainer.getChildByName("pause").on("click",function(){pauseWatch()});
 	clockContainer.getChildByName("reset").on("click",function(){resetWatch()});
 
